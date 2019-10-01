@@ -1,8 +1,10 @@
 import 'dart:io';
-
+import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:car_test_drive/sign.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 
 void main(){
   runApp(MyApp());
@@ -21,8 +23,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: Colors.blue,
-        accentColor: Colors.redAccent
+        primaryColor: Color(0xffcd2024),
+        accentColor: Color(0xff2f2f2f)
       ),
       
       home: HomePage()
@@ -38,6 +40,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final CollectionReference collectionReference = Firestore.instance.collection("users");
+
+
+
+
+  void add(){
+    Map<String,String> data = <String , String>{
+      "date" : DateTime.now().toString(),
+      "name" : fullname,
+      "dob" : dob.toString(),
+      "Address Line 1": address_1,
+      "Address Line 2": address_2,
+      "License Number": license_num,
+      "Vehicle Model": vehicle_model,
+      "State": _selectedState,
+      "Image": imgurl,
+      "Signature": SignState(fullname).signurl,
+    };
+
+collectionReference.add(data);
+
+  }
+
+
 
   String fullname = "";
 
@@ -46,16 +72,22 @@ class _HomePageState extends State<HomePage> {
   String license_num = "";
   String vehicle_model = "";
 
-  File _image;
+  String imgurl;
   String _selectedState = "Select a State";
   DateTime dob;
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
 
-    setState(() {
-      _image = image;
-    });
+
+
+  Future getImage() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    StorageReference ref =
+    FirebaseStorage.instance.ref().child("$fullname.jpg");
+    StorageUploadTask uploadTask = ref.putFile(image);
+     imgurl  = (await uploadTask.onComplete).ref.getDownloadURL() as String;
   }
+
+
 List<String> states = ['New South Wales','Queensland','South Australia','Tasmania','Victoria','Western Australia','Australian Capital Territory','Northern Territory'];
 
   DateTime selectedDate = DateTime.now();
@@ -79,6 +111,13 @@ List<String> states = ['New South Wales','Queensland','South Australia','Tasmani
     return Scaffold(
       body: ListView(
         children: <Widget>[
+          
+          
+          Padding(
+              padding: EdgeInsets.all(20),
+            child: Image(image: AssetImage("assests/logo.png")),
+            
+          ),
 
           Padding(
             padding: const EdgeInsets.fromLTRB(20,10,20,10),
@@ -196,17 +235,18 @@ List<String> states = ['New South Wales','Queensland','South Australia','Tasmani
               )
           ),
 
-<<<<<<< HEAD
-//          Padding(
-//              padding: const EdgeInsets.fromLTRB(20,10,20,10),
-//              child: RaisedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Signature()));},child: Text("Signature"),)
-//          ),
-=======
-        //  Padding(
-        //      padding: const EdgeInsets.fromLTRB(20,10,20,10),
-          //    child: RaisedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Signature()));},child: Text("Signature"),)
-          //),
->>>>>>> bcc62bae62ea3be7c433bb235f785edb5ea4dd85
+
+          Padding(
+              padding: const EdgeInsets.fromLTRB(20,10,20,10),
+              child: RaisedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Sign(fullname: fullname)));},child: Text("Signature"),)
+          ),
+
+          Padding(
+              padding: const EdgeInsets.fromLTRB(20,10,20,10),
+              child: RaisedButton(onPressed: (){add();},child: Text("Submit!"),)
+          ),
+
+
 
 
 
