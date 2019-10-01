@@ -196,10 +196,17 @@ List<String> states = ['New South Wales','Queensland','South Australia','Tasmani
               )
           ),
 
+<<<<<<< HEAD
 //          Padding(
 //              padding: const EdgeInsets.fromLTRB(20,10,20,10),
 //              child: RaisedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Signature()));},child: Text("Signature"),)
 //          ),
+=======
+        //  Padding(
+        //      padding: const EdgeInsets.fromLTRB(20,10,20,10),
+          //    child: RaisedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Signature()));},child: Text("Signature"),)
+          //),
+>>>>>>> bcc62bae62ea3be7c433bb235f785edb5ea4dd85
 
 
 
