@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "827702579647",
+    "firebase_url": "https://car-test-9d4a0.firebaseio.com",
+    "project_id": "car-test-9d4a0",
+    "storage_bucket": "car-test-9d4a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827702579647:android:c8348223f215efeb25d10a",
+        "android_client_info": {
+          "package_name": "dnadawa.car_test_drive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "827702579647-veun5dnvo4pleqs2sftcv4bg8mff12vp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1cs6NUgz48P9VpuwcP-ceP6EnoQvR0n4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "827702579647-veun5dnvo4pleqs2sftcv4bg8mff12vp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "827702579647-iot2mh0i7scugith0ipaj5c54nlqsh6q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dnadawa.carTestDrive"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
