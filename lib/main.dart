@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> {
 
 
 class HomePage extends StatefulWidget {
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -42,10 +43,22 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final CollectionReference collectionReference = Firestore.instance.collection("users");
 
-
+final TextEditingController namecon = TextEditingController();
+  final TextEditingController ad1con = TextEditingController();
+  final TextEditingController ad2con = TextEditingController();
+  final TextEditingController linumcon = TextEditingController();
+  final TextEditingController vehmodcon = TextEditingController();
 
 
   void add(){
+    fullname = namecon.text;
+    address_1 = ad1con.text;
+    address_2 = ad2con.text;
+    license_num = linumcon.text;
+    vehicle_model = vehmodcon.text;
+
+
+
     Map<String,String> data = <String , String>{
       "date" : DateTime.now().toString(),
       "name" : fullname,
@@ -56,15 +69,24 @@ class _HomePageState extends State<HomePage> {
       "Vehicle Model": vehicle_model,
       "State": _selectedState,
       "Image": imgurl,
-      "Signature": SignState(fullname).urlsign,//this has to be change
+      "Signature": "Look in Firebase Storage/new folder",//this has to be change
     };
 
 collectionReference.add(data);
 
+    namecon.clear();
+    ad1con.clear();
+    ad2con.clear();
+    linumcon.clear();
+    vehmodcon.clear();
+    image = null;
+    imgurl = null;
+
+
   }
 
 
-
+File image;
   String fullname = "";
 
   String address_1 = "";
@@ -79,7 +101,7 @@ collectionReference.add(data);
 
 
   Future getImage() async {
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     StorageReference ref = FirebaseStorage.instance.ref().child("$fullname.jpg");
     StorageUploadTask uploadTask = ref.putFile(image);
@@ -125,8 +147,9 @@ List<String> states = ['New South Wales','Queensland','South Australia','Tasmani
             padding: const EdgeInsets.fromLTRB(20,10,20,10),
             child: TextFormField(
               keyboardType: TextInputType.text,
+              controller: namecon,
               autofocus: false,
-              onChanged: (text){fullname=text;},
+
 
               decoration: InputDecoration(
                 hintText: 'Full Name',
@@ -139,7 +162,7 @@ List<String> states = ['New South Wales','Queensland','South Australia','Tasmani
             padding: const EdgeInsets.fromLTRB(20,10,20,10),
             child: TextFormField(
               autofocus: false,
-              onChanged: (text){address_1=text;},
+              controller: ad1con,
 
               decoration: InputDecoration(
                 hintText: 'Address Line 1',
@@ -152,7 +175,7 @@ List<String> states = ['New South Wales','Queensland','South Australia','Tasmani
             padding: const EdgeInsets.fromLTRB(20,10,20,10),
             child: TextFormField(
               autofocus: false,
-              onChanged: (text){address_2=text;},
+              controller: ad2con,
 
               decoration: InputDecoration(
                 hintText: 'Address Line 2',
@@ -183,7 +206,7 @@ List<String> states = ['New South Wales','Queensland','South Australia','Tasmani
             padding: const EdgeInsets.fromLTRB(20,10,20,10),
             child: TextFormField(
               autofocus: false,
-              onChanged: (text){license_num=text;},
+              controller: linumcon,
 
               decoration: InputDecoration(
                 hintText: 'Driving License Number',
@@ -217,7 +240,7 @@ List<String> states = ['New South Wales','Queensland','South Australia','Tasmani
             padding: const EdgeInsets.fromLTRB(20,10,20,10),
             child: TextFormField(
               autofocus: false,
-              onChanged: (text){vehicle_model=text;},
+              controller: vehmodcon,
 
               decoration: InputDecoration(
                 hintText: 'Vehicle Model',
@@ -241,7 +264,7 @@ List<String> states = ['New South Wales','Queensland','South Australia','Tasmani
 
           Padding(
               padding: const EdgeInsets.fromLTRB(20,10,20,10),
-              child: RaisedButton(color:Colors.orange,onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Sign(fullname: fullname)));},child: Text("Signature"),)
+              child: RaisedButton(color:Colors.orange,onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Sign(fullname: namecon.text)));},child: Text("Signature"),)
           ),
 
           Padding(
