@@ -237,7 +237,7 @@ List<String> states = ['New South Wales','Queensland','South Australia','Tasmani
 
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(20,10,20,10),
+            padding: const EdgeInsets.fromLTRB(30,20,30,20),
             child: TextFormField(
               autofocus: false,
               controller: vehmodcon,
